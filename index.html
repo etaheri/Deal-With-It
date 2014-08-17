@@ -2,12 +2,12 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>tracking.js - face hello world</title>
-  <link rel="stylesheet" type="text/css" href="animate.css">
-  <script src="tracking-min.js"></script>
-  <script src="face-min.js"></script>
-  <script src="eye-min.js"></script>
-  <script src="mouth-min.js"></script>
+  <title>Deal With It!</title>
+  <link rel="stylesheet" type="text/css" href="css/animate.css">
+  <script src="tracking_src/tracking-min.js"></script>
+  <script src="tracking_src/data/face-min.js"></script>
+  <script src="tracking_src/data/eye-min.js"></script>
+  <script src="tracking_src/data/mouth-min.js"></script>
 
   <style>
   html{
@@ -62,7 +62,7 @@
   </div>
   <div class="demo-frame">
     <div class="demo-container">
-      <img id="img" src="team.jpg" />
+      <img id="img" src="img/team.jpg" />
     </div>
   </div>
   <div>
@@ -120,7 +120,7 @@ function deal() {
         rect.style.top = (img.offsetTop + y) + 'px';
 
         var deal = new Image();
-        deal.src = "deal.png";
+        deal.src = "img/deal.png";
 		//var deal=document.getElementById("deal");
     deal.style.width = w + 'px';
     deal.style.height = h + 'px';
