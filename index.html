@@ -1,199 +1,121 @@
-  <!doctype html>
-  <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Deal With It!</title>
-    <script src="tracking_src/tracking-min.js"></script>
-    <script src="tracking_src/data/face-min.js"></script>
-    <script src="tracking_src/data/eye-min.js"></script>
-    <script src="tracking_src/data/mouth-min.js"></script>
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Deal With It!</title>
+  <script src="tracking_src/tracking-min.js"></script>
+  <script src="tracking_src/data/face-min.js"></script>
+  <script src="tracking_src/data/eye-min.js"></script>
+  <script src="tracking_src/data/mouth-min.js"></script>
+  <script src="js/gif.js"></script>
 
-    <style>
-    html{
-      font-family: Impact;
-    }
-    h1{
-      font-size: 60px;
-    }
-    body{
-      text-align: center;
-    }
-    .title{
-      background-color: white;
-      z-index: 9999;
-      width:100%;
-      height: 100px;
-      display: block;
 
-    }
-    .rect {
-      //border: 2px solid #a64ceb;
-      left: -1000px;
-      position: absolute;
-      top: -1000px;
-    }
+  <style>
+  html{
+    font-family: Impact;
+  }
+  h1{
+    font-size: 60px;
+  }
+  body{
+    text-align: center;
+  }
+  .title{
+    background-color: white;
+    z-index: 9999;
+    width:100%;
+    height: 100px;
+    display: block;
 
-    #deal {
-      left: -1000px;
-      top: -1000px;
-    }
-    .demo-frame{
-      text-align: center;
-    }
-    #img{
-      max-width: 90%;
-      box-shadow: 0px 0px 50px #888888;
-      display: none;
+  }
+  .rect {
+    //border: 2px solid #a64ceb;
+    left: -1000px;
+    position: absolute;
+    top: -1000px;
+  }
 
-    }
-    a:hover{
-      cursor:pointer;
-      color: gray;
-    }
+  #deal {
+    left: -1000px;
+    top: -1000px;
+  }
+  .demo-frame{
+    text-align: center;
+  }
+  #img{
+    max-width: 90%;
+    box-shadow: 0px 0px 50px #888888;
+    display: none;
 
-    </style>
-  </head>
-  <body>
-    <div class="title">
-      <h1>DEAL WITH IT GENERATOR</h1>
-    </div>
-    <div class="demo-frame">
-      <div class="demo-container">
-        <img src="img/faces.jpg" id="img">
-        <canvas id="myCanvas"></canvas>
+  }
+  a:hover{
+    cursor:pointer;
+    color: gray;
+  }
 
-      </div>
-    </div>
-    <div>
-      <h3 style="padding-top: 25px;"><a onClick="deal()">Deal!</a></h3>
-      <h3 style="padding-top: 25px;"><a onClick="reset()">Reset!</a></h3>
-      <form id="form1" runat="server">
-        <input type='file' id="imgInp" />
-      </form>
+  </style>
+</head>
+<body>
+  <div class="title">
+    <h1>DEAL WITH IT GENERATOR</h1>
+  </div>
+  <div class="demo-frame">
+    <div class="demo-container">
+      <img src="img/faces.jpg" id="img">
+      <canvas id="myCanvas"></canvas>
 
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script>
-    var canvas;
-    var context;
+  </div>
+  <div>
+    <h3 style="padding-top: 25px;"><a onClick="deal()">Deal!</a></h3>
+    <h3 style="padding-top: 25px;"><a onClick="reset()">Reset!</a></h3>
+    <h3 style="padding-top: 25px;"><a onClick="gif()">Make gif!</a></h3>
+    <form id="form1" runat="server">
+      <input type='file' id="imgInp" />
+    </form>
 
-    $(function(){
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script>
+  var canvas;
+  var context;
+  var backgound;
+  var backgroundsrc = 'img/faces.jpg';
+  var dealimg;
+  var anims = [];
+  var interval;
+  $(function(){
 
-     var canvas = document.getElementById('myCanvas');
-     var context = canvas.getContext('2d');
-     var imageObj = new Image();
-     imageObj.src = 'img/faces.jpg';
+    canvas = document.getElementById('myCanvas');
+    context = canvas.getContext('2d');
+    backgound = new Image();
+    backgound.src = backgroundsrc;
+    dealimg = new Image();
+    dealimg.src = "img/deal.png";
 
 
-     imageObj.onload = function() {
-      canvas.width  = imageObj.width;
-      canvas.height = imageObj.height;
-      context.drawImage(imageObj, 0, 0);
+    backgound.onload = function() {
+      canvas.width  = backgound.width;
+      canvas.height = backgound.height;
+      context.drawImage(backgound, 0, 0);
     };
 
   });
 
-    function deal() {
-      var img = document.getElementById('myCanvas');
-      // var deal = document.getElementById('deal');
-
-      //var eyetracker = new tracking.ObjectTracker('eye');
-
-      var facetracker = new tracking.ObjectTracker('face');
-      facetracker.setStepSize(1.7);
-      //eyetracker.setStepSize(1.7);
-
-      //tracking.track('#img', eyetracker);
-      tracking.track('#img', facetracker);
-
-      facetracker.on('track', function(event) {
-        event.data.forEach(function(rect) {
-
-
-          window.plot(rect.x, rect.y, rect.width, rect.height);    
-        });
-      });
-
-      window.plot = function(x, y, w, h) {
-        /*
-        var rect = document.createElement('div');
-        
-        document.querySelector('.demo-container').appendChild(rect);
-
-        rect.classList.add('rect');
-        rect.style.width = w + 'px';
-        rect.style.height = h + 'px';
-        rect.style.left = (img.offsetLeft + x) + 'px';
-        rect.style.top = (img.offsetTop + y) + 'px';
-        */
-        var deal = new Image();
-        deal.src = "img/deal.png";
-  	//var deal=document.getElementById("deal");
-   //deal.onload = function (){
-    //deal.style.width = w + 'px';
-    //deal.style.height = h + 'px';
-    //deal.style.left = (img.offsetLeft + x) + 'px';
-    //deal.style.top = (img.offsetTop + y) + 'px';
-    //rect.appendChild(deal);
-    //rect.className += ' animated fadeInDown';
-
-    var canvas = document.getElementById('myCanvas');
-    var context = canvas.getContext('2d');
-
-    deal.addEventListener('load', function () {
-
-      var interval = setInterval(function() {
-        var tx = -50, ty = -50;
-
-        return function () {
-          //context.clearRect(0, 0);
-          context.drawImage(deal, x, ty, w, h);
-
-          ty += 1;
-          if (ty >= y) {
-            ty = y;
-            return;
-          }
-        };
-      }(), 1000/40);
-    }, false);
-
-
-    /*
-    imageObjs.onload = function() {
-
-      imageObjs.width = w;
-      imageObjs.height = h;
-      context.drawImage(imageObjs, x, y, w, h);
-    };
-    imageObjs.src = 'img/deal.png';
-    */
-  //};
-
-};
-};
-function reset(){
-  $( ".rect" ).remove();
-  var canvas = document.getElementById('myCanvas');
-  canvas.width = canvas.width;
-  canvas.height = canvas.height;
-}
 function readURL(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
 
     reader.onload = function (e) {
       $('#img').attr('src', e.target.result);
-      var canvas = document.getElementById('myCanvas');
-      var context = canvas.getContext('2d');
-      var imageObj = new Image();
-      imageObj.src = e.target.result;
-      
+      backgound = new Image();
+      backgound.src = e.target.result;
 
-      imageObj.onload = function() {
-        canvas.width  = imageObj.width;
-        canvas.height = imageObj.height;
-        context.drawImage(imageObj, 0, 0);
+
+      backgound.onload = function() {
+        canvas.width  = backgound.width;
+        canvas.height = backgound.height;
+        context.drawImage(backgound, 0, 0);
       };
 
     }
@@ -201,12 +123,117 @@ function readURL(input) {
     reader.readAsDataURL(input.files[0]);
   }
 }
+    $("#imgInp").change(function(){
+        readURL(this);
+    });
 
-$("#imgInp").change(function(){
-  $( ".rect" ).remove();
-  readURL(this);
+  function deal() {
+// var deal = document.getElementById('deal');
+
+//var eyetracker = new tracking.ObjectTracker('eye');
+
+var facetracker = new tracking.ObjectTracker('face');
+facetracker.setStepSize(1.7);
+//eyetracker.setStepSize(1.7);
+
+//tracking.track('#img', eyetracker);
+tracking.track('#img', facetracker);
+
+facetracker.on('track', function(event) {
+  event.data.forEach(function(rect) {
+
+
+    window.plot(rect.x, rect.y, rect.width, rect.height);    
+  });
 });
 
+
+interval = setInterval(function() {
+  draw();
+}, 1000/30);
+
+};
+
+window.plot = function(x, y, w, h) {
+  anims.push(new animImg(x,-50,y,w,h));
+
+};
+
+function draw() {
+  context.clearRect(0,0,canvas.width, canvas.height);
+
+
+  context.drawImage(backgound, 0, 0);
+
+  anims.forEach(function(e){
+    if(e.y==e.dest){
+      e.y=e.dest;
+
+    }
+    else{
+      e.y++;
+    }
+    context.drawImage(dealimg, e.x, e.y, e.width, e.height);
+  });
+};
+
+function animImg(x,y,dest,width,height){
+  this.x = x;
+  this.y = y;
+  this.dest = dest;
+  this.width = width;
+  this.height = height;
+}
+
+
+function reset(){
+  clearInterval(interval);
+  anims = [];
+  context.clearRect(0,0,canvas.width, canvas.height);
+  context.drawImage(backgound, 0, 0);
+}
+
+function readURL(input) {
+  console.log("input");
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      $('#img').attr('src', e.target.result);
+      backgound = new Image();
+      backgound.src = e.target.result;
+
+
+      backgound.onload = function() {
+        canvas.width  = backgound.width;
+        canvas.height = backgound.height;
+        context.drawImage(backgound, 0, 0);
+      };
+
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+function gif(){
+  reset();
+  deal();
+var gif = new GIF({
+  workers: 2,
+  quality: 10
+});
+//gif.addFrame(myCanvas, {delay: 30});
+var i = 0;
+while(i<80){
+  gif.addFrame(myCanvas,{delay: 30});
+  i++;
+}
+gif.on('finished', function(blob) {
+  window.open(URL.createObjectURL(blob));
+});
+
+gif.render();
+}
 </script>
 
 </body>
