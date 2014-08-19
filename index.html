@@ -13,6 +13,7 @@
   <style>
   html{
     font-family: Impact;
+    background-color: #ecf0f1;
   }
   h1{
     font-size: 60px;
@@ -29,7 +30,7 @@
     letter-spacing: 2px;
     margin-top: 0px;
   }
-    .title p{
+  .title p{
     color: white;
     font-size: 30px;
     margin-bottom: 100px;
@@ -41,6 +42,16 @@
     display: block;
 
 
+  }
+  .section{
+    margin: 0 auto;
+    background-color: #fff;
+    width: 90%;
+    margin-bottom: 50px;
+  }
+  .section .content{
+    padding-top: 10px;
+    padding-bottom: 20px;
   }
   .rect {
     //border: 2px solid #a64ceb;
@@ -56,10 +67,7 @@
   .demo-frame{
     text-align: center;
   }
-  .demo-container{
-     padding-top: 100px;
-  }
- 
+
   #img{
     max-width: 90%;
     box-shadow: 0px 0px 50px #888888;
@@ -72,119 +80,141 @@
   }
 
   .peter-river-flat-button {
-  position: relative;
-  vertical-align: top;
-  width: 100%;
-  height: 60px;
-  padding: 0;
-  font-size: 22px;
-  color: white;
-  text-align: center;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  background: #3498db;
-  border: 0;
-  border-bottom: 2px solid #2a8bcc;
-  cursor: pointer;
-  -webkit-box-shadow: inset 0 -2px #2a8bcc;
-  box-shadow: inset 0 -2px #2a8bcc;
-}
-.peter-river-flat-button:active {
-  top: 1px;
-  outline: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
+    position: relative;
+    vertical-align: top;
+    width: 100%;
+    height: 60px;
+    padding: 0;
+    font-size: 22px;
+    color: white;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    background: #3498db;
+    border: 0;
+    cursor: pointer;
+  }
+  .peter-river-flat-button:active {
+    top: 1px;
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
 
-.emerald-flat-button {
-  position: relative;
-  vertical-align: top;
-  width: 100%;
-  height: 60px;
-  padding: 0;
-  font-size: 22px;
-  color: white;
-  text-align: center;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  background: #2ecc71;
-  border: 0;
-  border-bottom: 2px solid #28be68;
-  cursor: pointer;
-  -webkit-box-shadow: inset 0 -2px #28be68;
-  box-shadow: inset 0 -2px #28be68;
-}
-.emerald-flat-button:active {
-  top: 1px;
-  outline: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
+  .emerald-flat-button {
+    position: relative;
+    vertical-align: top;
+    width: 100%;
+    height: 60px;
+    padding: 0;
+    font-size: 22px;
+    color: white;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    background: #2ecc71;
+    border: 0;
+    cursor: pointer;
+  }
+  .emerald-flat-button:active {
+    top: 1px;
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
 
-.alizarin-flat-button {
-  position: relative;
-  vertical-align: top;
-  width: 100%;
-  height: 60px;
-  padding: 0;
-  font-size: 22px;
-  color: white;
-  text-align: center;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  background: #e74c3c;
-  border: 0;
-  border-bottom: 2px solid #db4334;
-  cursor: pointer;
-  -webkit-box-shadow: inset 0 -2px #db4334;
-  box-shadow: inset 0 -2px #db4334;
-}
-.alizarin-flat-button:active {
-  top: 1px;
-  outline: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
+  .alizarin-flat-button {
+    position: relative;
+    vertical-align: top;
+    width: 100%;
+    height: 60px;
+    padding: 0;
+    font-size: 22px;
+    color: white;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    background: #e74c3c;
+    border: 0;
+    cursor: pointer;
+  }
+  .alizarin-flat-button:active {
+    top: 1px;
+    outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
 
-.button-section{
-  width: 400px;
-  display: inline-block;
-}
-.button-section .element{
-  width: 33.33%;
-  display: inline-block;
-}
+  .button-section{
+    width: 400px;
+    display: inline-block;
+  }
+  .button-section .element{
+    width: 40%;
+    display: inline-block;
+  }
+  .one-half{
+    width: 50%;
+    display: inline;
+  }
+  #form1{
+    display: none;
+  }
 
   </style>
 </head>
 <body>
   <div class="title">
-    <h1>DEAL WITH IT GENERATOR</h1>
+    <h1>AUTO DEAL WITH IT GENERATOR</h1>
     <p>Deal With it!</p>
   </div>
-  <div class="demo-frame">
-    <div class="demo-container">
-      <img src="img/faces.jpg" id="img">
-      <canvas id="myCanvas"></canvas>
+  <div class="section" style="margin-top:20px">
+    <div class="content">
+      <h3>Step 1.</h3>
+      <div class="button-section">
+        <div class="element">
+          <input type="submit" id="upload" value="Upload File" class="peter-river-flat-button"/>
+          <form id="form1" runat="server">
+            <input type='file' id="imgInp" class="peter-river-flat-button"/>
+          </form>
+        </div>
+        <div class="element">
+          <input type="submit" value="Take Photo" class="peter-river-flat-button"/>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <div class="section">
+    <div class="content">
+      <h3>Step 2.</h3>
+      <div class="demo-frame">
+        <div class="demo-container">
+          <img src="img/faces.jpg" id="img">
+          <canvas id="myCanvas"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="button-section">
+        <div class="element">
+          <input type="submit" value="Preview" class="emerald-flat-button" onClick="deal();">
+        </div>
+        <div class="element">
+          <input type="submit" value="Reset" class="alizarin-flat-button" onClick="reset()">
+        </div>
+      </div>
     </div>
   </div>
-  <div class="button-section">
-    <div class="element">
-    <input type="submit" value="Play" class="emerald-flat-button" onClick="deal();">
+  <div class="section">
+    <div class="content">
+      <h3>Step 3.</h3>
+      <div class="button-section">
+        <div class="element">
+          <input type="submit" value="Share Link" class="peter-river-flat-button" onClick="link();">
+        </div>
+        <div class="element">
+          <input type="submit" value="Export Gif" class="peter-river-flat-button" onClick="gif()">
+        </div>
+      </div>
     </div>
-    <div class="element">
-    <input type="submit" value="Reset" class="alizarin-flat-button" onClick="reset()">
-  </div>
-    <div class="element">
-    <input type="submit" value="Play" class="peter-river-flat-button" onClick="gif()">
-    </div>
-  </div>
-     <div>
-    <h3 style="padding-top: 25px;"><a onClick="deal()">Deal!</a></h3>
-    <h3 style="padding-top: 25px;"><a onClick="reset()">Reset!</a></h3>
-    <h3 style="padding-top: 25px;"><a onClick="gif()">Make gif!</a></h3>
-    <form id="form1" runat="server">
-      <input type='file' id="imgInp" />
-    </form>
-
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script>
@@ -196,6 +226,11 @@
   var anims = [];
   var interval;
   $(function(){
+     $('#upload').on('click', function () { // use .live() for older versions of jQuery
+        $('#imgInp').click();
+        setInterval(intervalFunc, 1);
+        return false;
+    });
 
     canvas = document.getElementById('myCanvas');
     context = canvas.getContext('2d');
@@ -213,30 +248,30 @@
 
   });
 
-function readURL(input) {
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
 
-    reader.onload = function (e) {
-      $('#img').attr('src', e.target.result);
-      backgound = new Image();
-      backgound.src = e.target.result;
+      reader.onload = function (e) {
+        $('#img').attr('src', e.target.result);
+        backgound = new Image();
+        backgound.src = e.target.result;
 
 
-      backgound.onload = function() {
-        canvas.width  = backgound.width;
-        canvas.height = backgound.height;
-        context.drawImage(backgound, 0, 0);
-      };
+        backgound.onload = function() {
+          canvas.width  = backgound.width;
+          canvas.height = backgound.height;
+          context.drawImage(backgound, 0, 0);
+        };
 
+      }
+
+      reader.readAsDataURL(input.files[0]);
     }
-
-    reader.readAsDataURL(input.files[0]);
   }
-}
-    $("#imgInp").change(function(){
-        readURL(this);
-    });
+  $("#imgInp").change(function(){
+    readURL(this);
+  });
 
   function deal() {
 // var deal = document.getElementById('deal');
@@ -261,7 +296,7 @@ facetracker.on('track', function(event) {
 
 interval = setInterval(function() {
   draw();
-}, 1000/30);
+}, 1000/60);
 
 };
 
@@ -313,7 +348,7 @@ function readURL(input) {
       $('#img').attr('src', e.target.result);
       backgound = new Image();
       backgound.src = e.target.result;
-
+      clearInterval(interval);
 
       backgound.onload = function() {
         canvas.width  = backgound.width;
@@ -329,10 +364,10 @@ function readURL(input) {
 function gif(){
   reset();
   deal();
-var gif = new GIF({
-  workers: 2,
-  quality: 10
-});
+  var gif = new GIF({
+    workers: 2,
+    quality: 10
+  });
 //gif.addFrame(myCanvas, {delay: 30});
 var i = 0;
 while(i<80){
