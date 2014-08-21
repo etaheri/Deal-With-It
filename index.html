@@ -157,7 +157,18 @@
   #form1{
     display: none;
   }
-
+  #videoElement{
+    display: none;
+    width: 400px;
+    height: 300px;
+    margin: 0 auto;
+  }
+  #myCanvas{
+    margin: 0 auto;
+  }
+  .webcamBtn{
+    display: none;
+  }
   </style>
 </head>
 <body>
@@ -176,7 +187,7 @@
           </form>
         </div>
         <div class="element">
-          <input type="submit" value="Take Photo" class="peter-river-flat-button"/>
+          <input type="submit" value="Take Photo" onClick="webcam()" class="peter-river-flat-button"/>
         </div>
       </div>
     </div>
@@ -189,17 +200,20 @@
         <div class="demo-container">
           <img src="img/faces.jpg" id="img">
           <canvas id="myCanvas"></canvas>
+               <video autoplay id="videoElement">
+      </video>
         </div>
       </div>
     </div>
     <div class="content">
       <div class="button-section">
         <div class="element">
-          <input type="submit" value="Preview" class="emerald-flat-button" onClick="deal();">
+          <input type="submit" value="Preview" class="emerald-flat-button previewBtn" onClick="deal();">
         </div>
         <div class="element">
-          <input type="submit" value="Reset" class="alizarin-flat-button" onClick="reset()">
+          <input type="submit" value="Reset" class="alizarin-flat-button previewBtn" onClick="reset()">
         </div>
+        <input type="submit" value="Capture" class="emerald-flat-button webcamBtn" onClick="photo()">
       </div>
     </div>
   </div>
@@ -279,17 +293,21 @@
 //var eyetracker = new tracking.ObjectTracker('eye');
 
 var facetracker = new tracking.ObjectTracker('face');
-facetracker.setStepSize(1.7);
+facetracker.setStepSize(0.5);
 //eyetracker.setStepSize(1.7);
 
 //tracking.track('#img', eyetracker);
 tracking.track('#img', facetracker);
 
 facetracker.on('track', function(event) {
+  
   event.data.forEach(function(rect) {
-
+console.log("faces")
 
     window.plot(rect.x, rect.y, rect.width, rect.height);    
+    console.log(rect.x);
+    console.log(rect.y);
+    console.log(rect.width);
   });
 });
 
@@ -379,6 +397,41 @@ gif.on('finished', function(blob) {
 });
 
 gif.render();
+}
+
+function webcam(){
+  var video = document.querySelector("#videoElement");
+ 
+  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+ 
+  if (navigator.getUserMedia) {       
+    navigator.getUserMedia({video: true}, handleVideo, videoError);
+  }
+ 
+function handleVideo(stream) {
+  $("#myCanvas").css( 'display', 'none' );
+  $("#videoElement").css( 'display', 'block' );
+  $(".webcamBtn").css( 'display', 'block' );
+  $(".previewBtn").css( 'display', 'none' );
+    video.src = window.URL.createObjectURL(stream);
+}
+ 
+function videoError(e) {
+    // do something
+}
+}
+function photo(){
+  var video = document.querySelector("#videoElement");
+  canvas.width = 400;
+  canvas.height = 300;
+  context.drawImage(video, 0, 0, 400, 300);
+  $("#videoElement").css( 'display', 'none' );
+  $("#myCanvas").css( 'display', 'block' );
+    $(".webcamBtn").css( 'display', 'none' );
+  $(".previewBtn").css( 'display', 'block' );
+  backgound = new Image();
+  backgound.src = canvas.toDataURL('image/webp');
+  $('#img').attr('src', canvas.toDataURL('image/webp'));
 }
 </script>
 
