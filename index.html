@@ -69,10 +69,10 @@
   }
 
   #img{
-    max-width: 90%;
-    box-shadow: 0px 0px 50px #888888;
-    display: none;
-
+    max-width: 400px;
+    height: auto;
+    position: absolute;
+    z-index: -100000;
   }
   a:hover{
     cursor:pointer;
@@ -239,27 +239,32 @@
   var dealimg;
   var anims = [];
   var interval;
-  $(function(){
+  var imgWidth;
+  var imgHeight;
+  $( document ).ready(function() {
      $('#upload').on('click', function () { // use .live() for older versions of jQuery
         $('#imgInp').click();
-        setInterval(intervalFunc, 1);
         return false;
     });
+   console.log("here");
 
     canvas = document.getElementById('myCanvas');
     context = canvas.getContext('2d');
-    backgound = new Image();
-    backgound.src = backgroundsrc;
     dealimg = new Image();
     dealimg.src = "img/deal.png";
-
-
-    backgound.onload = function() {
-      canvas.width  = backgound.width;
-      canvas.height = backgound.height;
-      context.drawImage(backgound, 0, 0);
-    };
-
+    backgound = new Image();
+    backgound.src = backgroundsrc;
+    $("#img").load(function(){
+      imgWidth = $(this).width();
+      imgHeight = $(this).height();
+       console.log("here");
+      canvas.width  = imgWidth;
+      canvas.height = imgHeight;
+      console.log(imgWidth);
+      console.log(imgHeight);
+    });
+    context.drawImage(backgound, 0, 0, imgWidth, imgHeight);
+    
   });
 
   function readURL(input) {
@@ -272,11 +277,17 @@
         backgound.src = e.target.result;
 
 
-        backgound.onload = function() {
-          canvas.width  = backgound.width;
-          canvas.height = backgound.height;
-          context.drawImage(backgound, 0, 0);
-        };
+        $("#img").load(function(){
+      imgWidth = $(this).width();
+      imgHeight = $(this).height();
+       console.log("here");
+      canvas.width  = imgWidth;
+      canvas.height = imgHeight;
+      console.log(imgWidth);
+      console.log(imgHeight);
+
+      context.drawImage(backgound, 0, 0, imgWidth, imgHeight);
+    });
 
       }
 
@@ -293,7 +304,7 @@
 //var eyetracker = new tracking.ObjectTracker('eye');
 
 var facetracker = new tracking.ObjectTracker('face');
-facetracker.setStepSize(0.5);
+facetracker.setStepSize(1);
 //eyetracker.setStepSize(1.7);
 
 //tracking.track('#img', eyetracker);
@@ -302,7 +313,7 @@ tracking.track('#img', facetracker);
 facetracker.on('track', function(event) {
   
   event.data.forEach(function(rect) {
-console.log("faces")
+    console.log("faces")
 
     window.plot(rect.x, rect.y, rect.width, rect.height);    
     console.log(rect.x);
@@ -327,7 +338,7 @@ function draw() {
   context.clearRect(0,0,canvas.width, canvas.height);
 
 
-  context.drawImage(backgound, 0, 0);
+  context.drawImage(backgound, 0, 0, imgWidth, imgHeight);
 
   anims.forEach(function(e){
     if(e.y==e.dest){
@@ -354,31 +365,9 @@ function reset(){
   clearInterval(interval);
   anims = [];
   context.clearRect(0,0,canvas.width, canvas.height);
-  context.drawImage(backgound, 0, 0);
+  context.drawImage(backgound, 0, 0, imgWidth, imgHeight);
 }
 
-function readURL(input) {
-  console.log("input");
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-
-    reader.onload = function (e) {
-      $('#img').attr('src', e.target.result);
-      backgound = new Image();
-      backgound.src = e.target.result;
-      clearInterval(interval);
-
-      backgound.onload = function() {
-        canvas.width  = backgound.width;
-        canvas.height = backgound.height;
-        context.drawImage(backgound, 0, 0);
-      };
-
-    }
-
-    reader.readAsDataURL(input.files[0]);
-  }
-}
 function gif(){
   reset();
   deal();
@@ -432,6 +421,8 @@ function photo(){
   backgound = new Image();
   backgound.src = canvas.toDataURL('image/webp');
   $('#img').attr('src', canvas.toDataURL('image/webp'));
+  imgWidth = 400;
+  imgHeight = 300;
 }
 </script>
 
